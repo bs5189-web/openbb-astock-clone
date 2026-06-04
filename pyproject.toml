@@ -1,0 +1,33 @@
+[project]
+name = "openbb-astock-clone"
+version = "0.1.0"
+description = "A 股智能投研平台复刻 — Streamlit 多页应用,数据源为本地 OpenBB Platform API"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+
+dependencies = [
+    "streamlit>=1.32.0",
+    "plotly>=5.18.0",
+    "pandas_ta>=0.3.14b0",
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "ruff>=0.3.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["openbb_client", "components"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

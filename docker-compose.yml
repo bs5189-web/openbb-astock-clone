@@ -1,0 +1,22 @@
+services:
+  openbb-astock-clone:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bs5189-web/openbb-astock-clone:latest
+    container_name: openbb-astock-clone
+    restart: unless-stopped
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+    environment:
+      - OPENBB_API_URL=${OPENBB_API_URL:-http://192.168.1.12:6900}
+    # 与 OpenBB API 容器同栈: 默认假设 openbb-api 在同一 docker network 上
+    # 若 openbb-api 不在同网络,可以通过 host network 访问 192.168.1.12:6900
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
